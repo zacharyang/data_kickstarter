@@ -1,0 +1,263 @@
+setwd("/Users/zachang/documents/data/data_kickstarter")#
+data=read.csv('DSI_kickstarterscrape_dataset.csv')#
+attach(data)#
+library(SparseM)#
+library(Matrix)#
+library(MatrixModels)#
+library(quantreg)
+names(status)
+summary(status)
+plot(duration,log(pledged,base=10),col=status,pch=20)#
+legend(x=80,y=7,legend=c('canceled','failed','live','successful','suspended'))
+plot(duration[status=='successful'|status=='failed'|status=='cancelled'],log(pledged,base=10)[status=='successful'|status=='failed'|status=='cancelled'],col=status,pch=20)
+summary(pledged)
+quantile(pledged,probs=0.9)
+?quantile
+quantile(pledged,probs=0.9,na.rm=T)
+rq.fit1<-rq(pledged~goal)
+rq.fit1<-rq(pledged~goal,tau=0.5)
+summary(rq.fit1)
+names(rq.fit1)
+rq.fit1$coefficients
+rq.fit1$coefficients$goal
+rq.fit1$coefficients[2]
+rq.fit1<-rq(pledged~goal,tau=c(0.1,0.5))
+rq.fit1
+rq.fit1$coefficients
+rq.fit1$coefficients[2.]
+rq.fit1$coefficients[2,]
+rq.fit1
+summary.rq(rq.fit1)
+2:98/100
+rq.fit1<-rq(pledged~goal,tau=2:98/100)
+plot(rq.fit1)
+rq.fit2<-rq(backers~goal,tau=2:98/100)
+plot(rq.fit1$coefficients[2,])
+rq.fit1$method
+names(rq.fit1)
+rq.fit1$rho
+rq.fit1
+rq.fit
+rq.fit.fnc
+plot(summary(rq.fit1))
+rq.fit1
+plot(rq.fit1)
+names(plot(rq.fit1))
+plot(rq.fit1,lty=1)
+plot(rq.fit1,pch=20)
+plot(rq.fit1,par(mfrow=c(1,1)))
+plot(rq.fit1,mfrow=c(1,1))
+plot(rq.fit1,mfrow=c(1,1),xlab="Quantile")
+rq.fit2<-rq(backers~goal,tau=2:98/100)
+plot(rq.fit2)
+summary(lm(backers~goal))
+plot(rq.fit1$coefficients[2,],type="n")
+par(mfrow=c(2,1))#
+plot(rq.fit1$coefficients[2,],type="n",xaxt="n",ylab="Quantile Regression Coefficient of Goal vs Pledged")#
+lines(rq.fit1$coefficient[2,],lty=4,lwd=2)#
+plot(rq.fit2$coefficients[2,],type="n",xlab="Quantile",ylab="Quantile Regression Coefficient of Goal vs Pledged")#
+lines(rq.fit2$coefficient[2,],lty=4,lwd=2)
+plot(rq.fit1$coefficients[2,],type="n",xlab=NULL,ylab="Coefficient of Goal vs Pledged")
+par(mfrow=c(2,1))#
+plot(rq.fit1$coefficients[2,],type="n",xlab=NULL,ylab="Coefficient of Goal vs Pledged")#
+lines(rq.fit1$coefficient[2,],lty=4,lwd=2)#
+plot(rq.fit2$coefficients[2,],type="n",xlab="Quantile",ylab="Coefficient of Goal vs Backers")#
+lines(rq.fit2$coefficient[2,],lty=4,lwd=2)
+plot(rq.fit1$coefficients[2,],type="n",xlab="Quantile",ylab="Coefficient of Goal vs Pledged")
+par(mfrow=c(2,1))#
+plot(rq.fit1$coefficients[2,],type="n",xlab="Quantile",ylab="Coefficient of Goal vs Pledged")#
+lines(rq.fit1$coefficient[2,],lty=4,lwd=2)#
+plot(rq.fit2$coefficients[2,],type="n",xlab="Quantile",ylab="Coefficient of Goal vs Backers")#
+lines(rq.fit2$coefficient[2,],lty=4,lwd=2)
+par(mfrow=c(2,1))#
+plot(rq.fit1$coefficients[2,],type="n",xlab="Percentile",ylab="Coefficient of Goal vs Pledged")#
+lines(rq.fit1$coefficient[2,],lty=4,lwd=2)#
+plot(rq.fit2$coefficients[2,],type="n",xlab="Percentile",ylab="Coefficient of Goal vs Backers")#
+lines(rq.fit2$coefficient[2,],lty=4,lwd=2)
+boxplot(log(pledged[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged Contributions in dollars (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")
+par(mar=c(6,4,4,2)+0.2)#
+boxplot(log(pledged[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged Contributions in dollars (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")
+par(mfrow=c(1,1))
+par(mar=c(6,4,4,2)+0.2)#
+boxplot(log(pledged[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged Contributions in dollars (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")
+plot(duration[status=='successful'|status=='failed'|status=='cancelled'],log(pledged,base=10)[status=='successful'|status=='failed'|status=='cancelled'],col=status,pch=20)
+plot(density(duration[data$success]))#
+lines(density(duration[!data$success]))
+hist(duration[data$success],freq=F)#
+plot(density(duration[data$success]))#
+lines(density(duration[!data$success]))
+summary(duration[data$success])
+data$success=status=='successful'
+plot(density(duration[data$success]))#
+lines(density(duration[!data$success]))
+plot(density(duration[data$success]),col="red",lwd=2)#
+lines(density(duration[!data$success]),col="blue",lwd=2)
+plot(density(duration[data$success]),col="blue",lwd=2)#
+lines(density(duration[!data$success]),col="red",lwd=2)
+plot(density(duration[data$success]),col="blue",lwd=2,xaxt="n")
+lines(density(duration[!data$success]),col="red",lwd=2)
+boxplot(log(backers[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged Contributions in dollars (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")
+par(mfrow=c(2,1),mar=c(6,4,4,2)+0.2)
+par(mfrow=c(2,1),mar=c(6,4,4,2)+0.2)#
+boxplot(log(pledged[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged Contributions in dollars (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")#
+boxplot(log(backers[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged Contributions in dollars (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")
+par(mfrow=c(2,1),mar=c(6,4,4,2)+0.2)#
+boxplot(log(pledged[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged $ (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")#
+boxplot(log(backers[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged $ (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")
+par(mfrow=c(2,1),mar=c(6,4,4,2)+0.2)#
+boxplot(log(pledged[status=="successful"],base=10)~category[status=='successful'],las=3,ylab="Pledged $ (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")#
+boxplot(log(backers[status=="successful"],base=10)~category[status=='successful'],las=3,ylab="Pledged $ (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")
+par(mfrow=c(2,1),mar=c(6,4,4,2)+0.2)#
+boxplot(log(pledged[status=="successful"],base=10)~category[status=='successful'],las=4,ylab="Pledged $ (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")#
+boxplot(log(backers[status=="successful"],base=10)~category[status=='successful'],las=4,ylab="Pledged $ (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")
+par(mfrow=c(2,1),mar=c(6,4,4,2)+0.2)#
+boxplot(log(pledged[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged $ (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")#
+boxplot(log(backers[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged $ (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")
+par(mfrow=c(2,1),mar=c(6,4,4,2)+0.2)#
+boxplot(log(pledged[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged $ (Log scale)",xaxt="n",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")#
+boxplot(log(backers[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged $ (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")
+par(mfrow=c(1,1),mar=c(6,4,4,2)+0.2)
+par(mfrow=c(1,1),mar=c(6,4,4,2)+0.2)#
+boxplot(log(pledged[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged $ (Log scale)",xaxt="n",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")#
+boxplot(log(backers[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged $ (Log
+?par
+?par
+par(mfrow=c(1,1),mar=c(5,4,4,2)+0.1)#
+boxplot(log(pledged[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged $ (Log scale)",xaxt="n",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")#
+par(mar=c(6,4,4,2)+0.2)#
+boxplot(log(backers[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged $ (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")
+par(mfrow=c(1,1),mar=c(5,4,4,2)+0.1)#
+boxplot(log(pledged[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged $ (Log scale)",xaxt="n",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")#
+par(mar=c(6,4,4,2)+0.2)
+par(mar=c(6,4,4,2)+0.2)#
+boxplot(log(backers[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Pledged $ (Log scale)",pch=20,col="skyblue",main="Boxplot of Pledged Contributions of Successful Projects by Category")
+boxplot(log(backers[status=="successful"],base=10)~category[status=='successful'],las=2,ylab="Backers (Log scale)",pch=20,col="skyblue",main="Boxplot of Backers of Successful Projects by Category")
+plot(density(duration[data$success]),col="blue",lwd=2,xaxt="n")#
+lines(density(duration[!data$success]),col="red",lwd=2)
+par(mfrow=c(2,1),mar=c(5,4,4,2)+0.1)
+par(mfrow=c(1,1))#
+data$success=status=='successful'#
+plot(density(duration[data$success]),col="blue",lwd=2,xaxt="n")#
+lines(density(duration[!data$success]),col="red",lwd=2)
+plot(density(duration[data$success]),col="steelblue",lwd=2,xaxt="n")
+lines(density(duration[!data$success]),col="magenta",lwd=2)
+plot(density(duration[data$success]),col="steelblue2",lwd=2,xaxt="n")#
+lines(density(duration[!data$success]),col="orange2",lwd=2)
+plot(density(duration[data$success]),col="steelblue2",lwd=2)
+plot(density(duration[data$success]),col="steelblue2",lwd=2)#
+lines(density(duration[!data$success]),col="orange2",lwd=2)#
+legend(x=80,y=0.08,legend=c('Successful','Unsuccessful'))
+legend(x=80,y=0.08,legend=c('Successful','Unsuccessful'),col=c('steelblue2','orange2'))
+plot(density(duration[data$success]),col="steelblue2",lwd=2)#
+lines(density(duration[!data$success]),col="orange2",lwd=2)#
+legend(x=80,y=0.08,legend=c('Successful','Unsuccessful'),col=c('steelblue2','orange2'))
+plot(density(duration[data$success]),col="steelblue2",lwd=2)#
+lines(density(duration[!data$success]),col="orange2",lwd=2)#
+legend(x=80,y=0.08,legend=c('Successful','Unsuccessful'),col=c('steelblue2','orange2'),lty=1,lwd=2)
+legend(x=70,y=0.08,legend=c('Successful','Unsuccessful'),col=c('steelblue2','orange2'),lty=1,lwd=2)
+plot(density(duration[data$success]),col="steelblue2",lwd=2)#
+lines(density(duration[!data$success]),col="orange2",lwd=2)#
+legend(x=70,y=0.08,legend=c('Successful','Unsuccessful'),col=c('steelblue2','orange2'),lty=1,lwd=2)
+plot(density(duration[data$success]),col="steelblue2",lwd=2,main="Frequency Densities of Campaign Duration for Successful vs Unsuccessful Campaigns")#
+lines(density(duration[status=='cancelled'|status=='failed']),col="orange2",lwd=2)#
+legend(x=70,y=0.08,legend=c('Successful','Unsuccessful'),col=c('steelblue2','orange2'),lty=1,lwd=2)
+rq.fit3<-rq(pledged~duration,tau=2:98/100)
+plot(rq.fit3)
+rq.fit3<-rq(pledged~duration,tau=2:98/100,method="bootstrap")
+?rq.fit
+rq.fit3<-rq(pledged~duration,tau=2:98/100,method="fn")
+summary(rq.fit)
+summary(rq.fit3)
+rq.fit3<-rq(pledged~duration,tau=2:98/100)
+?cut
+max(duration)
+seq(1,85,by=5)
+seq(0,85,by=5)
+c(seq(0,85,by=5),max(duration))
+data$duration.cat<-cut(duration,c(seq(0,85,by=5),max(duration)))
+summary(data#duration.cat)
+summary(data$duration.cat)
+summary(as.factor(data$duration.cat))
+data$success
+logit.fit1<-glm(success~duration.cat,family=binomial('logit'),data=data)
+summary(logit.fit1)
+names(logit.fit1)
+plot(logit.fit1)
+logit.fit1$coefficients
+logit.fit1$terms
+logit.fit1$qr
+summary(logit.fit1)$coefficients
+summary(logit.fit1)$coefficients[,2]
+plot(logit.fit1$coefficients)
+summary(logit.fit1)$coefficients[2:length(summary(logit.fit1)$coefficients),2]
+summary(logit.fit1)$coefficients
+summary(logit.fit1)$coefficients[1,2]
+summary(logit.fit1)$coefficients[2:nrow(summary(logit.fit1)$coefficients),2]
+plot(logit.fit1$coefficients[2:length(logit.fit1$coefficients)])
+se.up<-logit.fit1$coefficients[2:length(logit.fit1$coefficients)]+1.96*summary(logit.fit1)$coefficients[2:nrow(summary(logit.fit1)$coefficients),2]
+se.up
+se.fit1.up<-logit.fit1$coefficients[2:length(logit.fit1$coefficients)]+1.96*summary(logit.fit1)$coefficients[2:nrow(summary(logit.fit1)$coefficients),2]
+se.fit1.low<-logit.fit1$coefficients[2:length(logit.fit1$coefficients)]-1.96*summary(logit.fit1)$coefficients[2:nrow(summary(logit.fit1)$coefficients),2]
+plot(logit.fit1$coefficients[2:length(logit.fit1$coefficients)])#
+lines(se.fit1.up)#
+lines(se.fit1.low)
+plot(logit.fit1$coefficients[2:length(logit.fit1$coefficients)],ylim=c(min(se.fit1.low),min(se.fit1.up)),lty=2)
+plot(logit.fit1$coefficients[2:length(logit.fit1$coefficients)],type="b", ylim=c(min(se.fit1.low),max(se.fit1.up)),lwd=2,pch=20)
+lines(se.fit1.up)#
+lines(se.fit1.low)
+plot(logit.fit1$coefficients[2:length(logit.fit1$coefficients)],type="b", ylim=c(min(se.fit1.low)+2,max(se.fit1.up)+2),lwd=2,pch=20)
+plot(logit.fit1$coefficients[2:length(logit.fit1$coefficients)],type="b", ylim=c(min(se.fit1.low),max(se.fit1.up)),lwd=2,pch=20)
+plot(logit.fit1$coefficients[2:length(logit.fit1$coefficients)],type="b", ylim=c(min(se.fit1.low)-2,max(se.fit1.up)+2),lwd=2,pch=20)
+plot(logit.fit1$coefficients[2:length(logit.fit1$coefficients)],type="b", ylim=c(min(se.fit1.low)-3,max(se.fit1.up)+3),lwd=2,pch=20)
+lines(se.fit1.up)#
+lines(se.fit1.low)
+abline(h=0)
+plot(logit.fit1$coefficients[2:length(logit.fit1$coefficients)],type="b", ylim=c(min(se.fit1.low)-3,max(se.fit1.up)+3),lwd=2,pch=20,cex=0.5)
+lines(se.fit1.up)#
+lines(se.fit1.low)#
+abline(h=0)
+lines(se.fit1.up,lty=2)
+plot(logit.fit1$coefficients[2:length(logit.fit1$coefficients)],type="b", ylim=c(min(se.fit1.low)-3,max(se.fit1.up)+3),lwd=2,pch=20,cex=0.5)#
+lines(se.fit1.up,lty=3,col='red')#
+lines(se.fit1.low,lty=3,col='red')#
+abline(h=0,lty=2)
+length(logit.fit1$coefficients)
+seq(0,85,by=5),max(duration)
+c(seq(0,85,by=5),max(duration))
+length(c(seq(0,85,by=5),max(duration)))
+plot(logit.fit1$coefficients[1:length(logit.fit1$coefficients)],type="b", ylim=c(min(se.fit1.low)-3,max(se.fit1.up)+3),lwd=2,pch=20,cex=0.5,xaxt='n')#
+axis(1,at=1:18,labels=seq(0,85,by=5))#
+lines(se.fit1.up,lty=3,col='red')#
+lines(se.fit1.low,lty=3,col='red')
+abline(h=0,lty=2)
+summary(fit1)
+summary(logit.fit1)
+axis(1,at=1:18,labels=seq(5,92,by=5))
+plot(logit.fit1$coefficients[1:length(logit.fit1$coefficients)],type="b", ylim=c(min(se.fit1.low)-3,max(se.fit1.up)+3),lwd=2,pch=20,cex=0.5,xaxt='n')#
+axis(1,at=1:18,labels=seq(5,92,by=5))#
+lines(se.fit1.up,lty=3,col='red')#
+lines(se.fit1.low,lty=3,col='red')#
+abline(h=0,lty=2)
+plot(logit.fit1$coefficients[1:length(logit.fit1$coefficients)],type="b", ylim=c(min(se.fit1.low)-3,max(se.fit1.up)+3),lwd=2,pch=20,cex=0.5,xaxt='n')#
+axis(1,at=seq(0.5,17.5,by=1),labels=seq(5,92,by=5))#
+lines(se.fit1.up,lty=3,col='red')#
+lines(se.fit1.low,lty=3,col='red')#
+abline(h=0,lty=2)
+axis(1,at=seq(0.5,17.5,by=1),labels=seq(0,92,by=5))
+plot(logit.fit1$coefficients[1:length(logit.fit1$coefficients)],type="b", ylim=c(min(se.fit1.low)-3,max(se.fit1.up)+3),lwd=2,pch=20,cex=0.5,xaxt='n')#
+axis(1,at=seq(0.5,17.5,by=1),labels=seq(0,85,by=5))#
+lines(se.fit1.up,lty=3,col='red')#
+lines(se.fit1.low,lty=3,col='red')#
+abline(h=0,lty=2)
+plot(logit.fit1$coefficients[1:length(logit.fit1$coefficients)],type="b", ylim=c(min(se.fit1.low)-3,max(se.fit1.up)+3),lwd=2,pch=20,cex=0.5,xaxt='n',main="Logistic Regression coefficients of Success vs Duration",xlab="Duration",ylab='Coefficients')#
+axis(1,at=seq(0.5,17.5,by=1),labels=seq(0,85,by=5))#
+lines(se.fit1.up,lty=3,col='red')#
+lines(se.fit1.low,lty=3,col='red')
+names(data)
+logit.fit1<-glm(success~duration.cat+goal+levels+backers,family=binomial('logit'),data=data)
+data$goal.scaled=goal/max(goal)
+data$backers.scalled=backers/max(backers)
+logit.fit1<-glm(success~duration.cat+goal.scaled+levels+backers.scaled,family=binomial('logit'),data=data)
+data$backers.scalled=backers/max(backers)
+data$backers.scaled=backers/max(backers)
+logit.fit1<-glm(success~duration.cat+goal.scaled+levels+backers.scaled,family=binomial('logit'),data=data)
